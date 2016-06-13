@@ -5,12 +5,10 @@
 </head>
 
 <body>
-	patterns
-	<script type="text/javascript">
-		function someFunc(){
-			var test_search = 0;
-		}
-	</script>
+	<div style="margin: 100px;">
+		Patterns <br />
+		<a href="/pattern/abstract factory.php">abstract factory and factory method</a>
+	</div>
 </body>
 
 </html>
