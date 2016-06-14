@@ -1,54 +1,65 @@
+Абстрактная фабрика - порождающий шаблон проектирования, <br />
+предоставляет интерфейс для создания семейств взаимодействующих или <br />
+взаимозависимых объектов не специфицируя их конкретных классов
 
 <?php
-/* Абстрактная фабрика - порождение семейств взаимодействующих объектов */
 
-abstract class AbstractConnection{
+interface IParent{
+	function getParentRole();
 }
 
-abstract class AbstractCommand{
-	public abstract function getData(AbstractConnection $con); 
+interface IChild{
+	function getChildName();
 }
 
-abstract class AbstractFactory{
-	public abstract function getConnection();
-	public abstract function getCommand();
+/* interface IFamily - this is abstract factory */
+interface IFamily{
+	function createFamily();
 }
 
-class DataClient{
-	public $con;
-	public $cmd;
+//---------------------------------------------
 
-	public function __construct(AbstractFactory $factory){
-		$this->con = $factory->getConnection(); // --- абстрагирование процессов инстанцирования
-		$this->cmd = $factory->getCommand();
-	}
-
-	public function getData(){
-		return $cmd->getData($this->con); // --------- абстрагирование процессов использования
+class IvanovFather implements IParent{
+	public function getParentRole(){
+		return 'father Ivanov';
 	}
 }
 
-/* Далее производится конкретная реализация простых классов и фабрики. 
-   DataClient предоставляет высокоуровневый интерфейс(набор методов)
-   для получения данных и при этом налицо слабая связанность */
-
-?>
-
-<?php 
-
-/* Фабричный метод инкапсулирует создание объектов, предоставляя субклассам 
-   самим определять способ создания объекта */
-
-abstract class AbstractCreator{
-	public abstract function getObj();
-}
-
-class Client{
-	public $obj;
-
-	public function __construct(AbstractCreator $creator){
-		$this->obj = $creator->getObj();
+class IvanovMother implements IParent{
+	public function getParentRole(){
+		return 'mother Ivanova';
 	}
 }
 
+class IvanovChild implements IChild{
+	public function getChildName(){
+		return 'son Ivan Ivanov';
+	}
+}
+
+/* Class IvanovFamily - this is concrete factory */
+class IvanovFamily implements IFamily{
+	public $father;
+	public $mother;
+	public $child;
+
+	public function __construct(){
+		$this->father = new IvanovFather();
+		$this->mother = new IvanovMother();
+		$this->child = new IvanovChild(); 
+	}
+
+	public function createFamily(){
+		echo '<h4>This is family of Ivanov - ' .
+			$this->father->getParentRole() . ' and ' .
+			$this->mother->getParentRole() . ' and ' .
+			$this->child->getChildName() . '</h4>';
+	}
+}
+
+function getFamilyInfo(IFamily $family){
+	$family->createFamily();
+}
+
+getFamilyInfo(new IvanovFamily());
 ?>
