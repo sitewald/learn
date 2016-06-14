@@ -1,3 +1,5 @@
+<?php require('../back.php'); ?>
+
 Абстрактная фабрика - порождающий шаблон проектирования, <br />
 предоставляет интерфейс для создания семейств взаимодействующих или <br />
 взаимозависимых объектов не специфицируя их конкретных классов
@@ -5,16 +7,16 @@
 <?php
 
 interface IParent{
-	function getParentRole();
+	public function getParentRole();
 }
 
 interface IChild{
-	function getChildName();
+	public function getChildName();
 }
 
 /* interface IFamily - this is abstract factory */
 interface IFamily{
-	function createFamily();
+	public function createFamily();
 }
 
 //---------------------------------------------
