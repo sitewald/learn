@@ -5,6 +5,7 @@
 </head>
 
 <body>
+	<!--MENU-->
 	<div style="margin: 100px;">
 		Creational patterns <br />
 		<a href="/pattern/creational patterns/factory method.php">factory method</a>
@@ -18,6 +19,7 @@
 		<a href="/pattern/creational patterns/singleton.php">singleton</a>
 		<br />
 	</div>
+	<!--END MENU-->
 </body>
 
 </html>
