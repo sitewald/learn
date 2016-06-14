@@ -11,6 +11,8 @@
 		<br />
 		<a href="/pattern/abstract factory.php">abstract factory</a>
 		<br />
+		<a href="/pattern/builder.php">builder</a>
+		<br />
 	</div>
 </body>
 
