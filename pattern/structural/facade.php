@@ -19,4 +19,10 @@ class CPU{
 		//...
 	}
 }
+
+class HardDrive{
+	public function read(){
+		//...
+	}
+}
 ?>
