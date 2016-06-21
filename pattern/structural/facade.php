@@ -25,4 +25,10 @@ class Memory{
 		//...
 	}
 }
+
+class HardDrive{
+	public function read(){
+		//...
+	}
+}
 ?>
