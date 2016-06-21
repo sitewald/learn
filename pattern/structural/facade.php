@@ -19,4 +19,10 @@ class CPU{
 		//...
 	}
 }
+
+class Memory{
+	public function load(){
+		//...
+	}
+}
 ?>
