@@ -24,6 +24,8 @@
 		<a href="/pattern/structural/adapter.php">adapter</a>
 		<br />
 		<a href="/pattern/structural/decorator.php">decorator</a> 
+		<br />
+		<a href="/pattern/structural/facade.php">facade</a>
 	</div>
 	<!--END MENU-->
 </body>
