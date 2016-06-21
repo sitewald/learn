@@ -18,6 +18,12 @@
 		<br />
 		<a href="/pattern/creational patterns/singleton.php">singleton</a>
 		<br />
+		Structural patterns <br />
+		<a href="/pattern/structural/proxy.php">proxy</a>
+		<br />
+		<a href="/pattern/structural/adapter.php">adapter</a>
+		<br />
+		<a href="/pattern/structural/decorator.php">decorator</a> 
 	</div>
 	<!--END MENU-->
 </body>
