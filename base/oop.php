@@ -3,6 +3,8 @@
 
 <?php
 
+error_reporting(E_NOTICE | E_WARNING | E_PARSE | E_ERROR);
+
 function __autoload($className){
 	require_once('Classes/' . $className . '.php');
 }
@@ -97,6 +99,20 @@ $testObj3 = new TestConstructDestruct(3);
 unset($testObj3); // Явный вызов деструктора
 ?>
 
+<?php echo $headerBegin, "Инициализация свойств при создании объекта", $headerEnd;
+
+class FieldTest{
+	public $a = 1;
+	public $b;
+}
+
+$ft = new FieldTest();
+
+echo $ft->a, '<br />'; // --- 1
+echo $ft->b, '<br />'; // --- ничего не выведет (пустое место)
+
+?>
+
 <?php echo $headerBegin, "Псевдоконстанты", $headerEnd;
 	
 	echo __LINE__, "<br />";
@@ -139,7 +155,11 @@ $a = new A(1);
 // $a1 = &$a означает копирование ссылки на объект
 
 // В php версии 5 
-$a1 = $a; // Копирование ссылки на объект
+$a1 = $a; // Копирование ссылки на объект для объектов и копирование по значению для 
+ 		  // обычных переменных.
+// $a1 = &$a; -- Это также копирование ссылки на объект для объектов, но 
+// для простых переменных это копирование ссылки на переменную
+
 $a1->count = 10;
 echo "<h3>Через ссылку значение count изменено на {$a->count}</h3>"; // 10
 
@@ -185,6 +205,7 @@ $ti = new TestInterface();
 $ti->showVar('implemented interface method work');
 
 ?>
+
 
 
 
