@@ -10,6 +10,8 @@
 		<br />
 		<a href="/base/oop.php">oop</a>
 		<br />
+		<a href="/base/exception.php">exception</a>
+		<br />
 		<a href="/pattern/index.php">pattern</a>
 	</div>
 </body>

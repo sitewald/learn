@@ -1,7 +1,7 @@
 <?php
 
 interface ISome{
-	function showVar($var);
+   function showVar($var);
 }
 
 ?>

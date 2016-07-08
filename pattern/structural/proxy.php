@@ -7,9 +7,9 @@ Proxy или заместитель - структурный шаблон про
 <?php 
 
 interface IGetDataFromDb{
-	public function testRights($user);
-	public function connect($connectionString);
-	public function execute($commandString);
+	function testRights($user);
+	function connect($connectionString);
+	function execute($commandString);
 }
 
 class RealSubject implements IGetDataFromDb{

@@ -7,7 +7,7 @@ Adapter - структурный шаблон проектирования, пр
 // Нужный интерфейс
 //
 interface IGetLength{
-	public function getObjectLength($obj);
+	function getObjectLength($obj);
 }
 
 // Класс с неподходящим интерфейсом

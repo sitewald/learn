@@ -482,8 +482,10 @@ $ref("Функция вызвана через переменную, в кото
 $a = "Глобальная переменная";
 
 function ShowLocal(){
+	define('INNER', 'нет разницы, где объявлена константа - она всё равно будет видна везде');
+	
 	$a = "Локальная переменная";
-	echo "$a <br />";
+	echo "{$a}<br />";
 } // По выходу из функции локальные переменные удаляются
 
 ShowLocal();
@@ -536,6 +538,84 @@ $result = GetSum(20, 30);
 echo "Функция GetSum(20, 30) вернула значение $result", "<br />";
 ?>
 
+<?php echo "<p class='header'>Аргументы по умолчанию</p>";
+
+function useDefaultArgs($arg = 10){
+	echo $arg, '<br />';
+}
+
+useDefaultArgs(); // ----- 10
+useDefaultArgs(5); // ---- 5
+
+function useDefaultArgs2($first = 10, $second){ // --- бессмысленно, так как
+	echo "{$first}, {$second} <br />";			// --- первый аргумент всё равно придётся указать
+}
+
+// поэтому аргумент со значением по умолчанию нужно писать в конце
+//
+function useDefaultArgs3($first, $second = 10){
+	echo "{$first}, {$second} <br />";
+}
+
+useDefaultArgs3(1); // ---- 1, 10
+?>
+
+<?php echo "<p class='header'>Аргументы по ссылке</p>";
+
+// ---- Обычные аргументы
+//
+function testVarChange($var){
+	$var++;
+}
+
+function testArrChange($arr){
+	$arr[1] = 100;
+}
+
+function testObjChange($obj){
+	$obj->_field = 1000;
+}
+
+// ---- По ссылке 
+function testVarByRef(&$var){
+	$var++;
+}
+
+function testArrByRef(&$arr){
+	$arr[1] = 100;
+}
+
+function testObjByRef(&$obj){
+	$obj->_field = 2000;
+}
+
+// --- класс для тестирования передачи объекта в функцию
+class ClassRefTest{
+	public $_field = 1;
+}
+
+$var_ref_test = 1;
+$arr_ref_test = array(1, 2);
+$obj_ref_test = new ClassRefTest();
+
+testVarChange($var_ref_test);
+testArrChange($arr_ref_test);
+testObjChange($obj_ref_test);
+
+echo $var_ref_test, '<br />'; // ---------- 1 (не изменилось)
+echo $arr_ref_test[1], '<br />'; // ------- 2 (не изменилось)
+echo $obj_ref_test->_field, '<br />'; // -- 1000 (изменилось - объект передаётся по ссылке)
+
+testVarByRef($var_ref_test);
+testArrByRef($arr_ref_test);
+testObjByRef($obj_ref_test);
+
+echo $var_ref_test, '<br />'; // ---------- 2 (изменилось)
+echo $arr_ref_test[1], '<br />'; // ------- 100 (изменилось)
+echo $obj_ref_test->_field, '<br />'; // -- 1000 (изменилось - объект и без этого передаётся по ссылке)
+
+?>
+
 <?php echo "<p class='header'> Рекурсия </p>";
 
 function func($a){
@@ -550,8 +630,14 @@ function func($a){
 func(3);
 ?>
 
+<?php echo "<p class='header'>Изменение переменной по ссылке</p>";
 
+$someVar = 1;
+$refVar = &$someVar;
+$refVar = 2;
 
+echo $someVar, '<br />'; // --- 2
+?>
 
 
 
