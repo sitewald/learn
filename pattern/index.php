@@ -25,7 +25,9 @@
 		<br />
 		<a href="/pattern/structural/decorator.php">decorator</a> 
 		<br />
-		<a href="/pattern/structural/facade.php">facade</a>
+		Behavioral patterns <br />
+		<a href="/pattern/behavioral/observer.php">observer</a>
+		<br />
 	</div>
 	<!--END MENU-->
 </body>
