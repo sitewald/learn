@@ -7,16 +7,16 @@
 <?php
 
 interface IParent{
-	public function getParentRole();
+	function getParentRole();
 }
 
 interface IChild{
-	public function getChildName();
+	function getChildName();
 }
 
 /* interface IFamily - this is abstract factory */
 interface IFamily{
-	public function createFamily();
+	function createFamily();
 }
 
 //---------------------------------------------

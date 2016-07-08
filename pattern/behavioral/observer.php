@@ -7,13 +7,13 @@
 
 <?php 
 interface ISubject{
-	public function addObserver(IObserver $observer);
-	public function removeObserver(IObserver $observer);
-	public function notify($newData);
+	function addObserver(IObserver $observer);
+	function removeObserver(IObserver $observer);
+	function notify($newData);
 }
 
 interface IObserver{
-	public function update($newData);
+	function update($newData);
 }
 
 class Subject implements ISubject{

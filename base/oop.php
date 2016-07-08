@@ -144,7 +144,7 @@ class A{
 		echo "<h3>При создании объекта его свойство count = {$this->count}</h3>";
 	}
 	
-	public function __clone(){
+	public function __clone(){ // ------------- вызывается через ключевое слово clone
 		echo "<h3>Объект был клонирован</h3>";
 	}
 }
@@ -170,6 +170,41 @@ $b2 = clone $b;
 $b2->count = 100;
 echo "<h3>У клона свойство count было изменено {$b2->count}</h3>";
 echo "<h3>У объекта свойство count = {$b->count}</h3>";
+?>
+
+<?php echo $headerBegin, "Перебор свойств объекта", $headerEnd;
+
+class LoopTest{
+	public $a = 1;
+	public $b = 2;
+
+	private $c = 3; // ---- не выведется в цикле
+
+	protected $d = 4;  // ---- не выведется в цикле
+
+	public function getA(){  // ---- не выведется в цикле
+		return $this->a;
+	}
+}
+
+$lt = new LoopTest();
+
+foreach($lt as $key => $value){
+	echo $key, ' = ', $value, '<br />';
+}
+?>
+
+<?php echo $headerBegin, "Константы класса", $headerEnd;
+
+class ConstTest{
+	const MYCONST = 'MYCONST value'; // ----- без модификатора доступа
+
+	public function fun(){
+		$a = self::MYCONST; // ---------- обращение внутри класса
+	}
+}
+
+$testConstOfClass = ConstTest::MYCONST; // ------ обращение извне класса
 ?>
 
 <?php echo $headerBegin, 'Наследование', $headerEnd;

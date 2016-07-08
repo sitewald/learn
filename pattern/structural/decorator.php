@@ -6,7 +6,7 @@ Decorator - структурный шаблон проектирования, п
 <?php 
 
 interface IComponent{
-	public function operation();
+	function operation();
 }
 
 class Component implements IComponent{

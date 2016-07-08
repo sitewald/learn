@@ -5,7 +5,7 @@
 
 <?php 
 interface IDuplicate{
-	public function duplicate();
+	function duplicate();
 }
 
 class ProtoTest implements IDuplicate{

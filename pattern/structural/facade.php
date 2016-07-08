@@ -39,17 +39,17 @@ class Computer{
 	private $_hardDrive;
 
 	public function __construct(){
-		this->_cpu = new CPU();
-		this->_memory = new Memory();
-		this->_hardDrive = new HardDrive();
+		$this->_cpu = new CPU();
+		$this->_memory = new Memory();
+		$this->_hardDrive = new HardDrive();
 	}
 
 	public function run(){
-		this->_cpu->freeze();
-		this->_hardDrive->read();
-		this->_memory->load();
-		this->_cpu->jump();
-		this->_cpu->execute();
+		$this->_cpu->freeze();
+		$this->_hardDrive->read();
+		$this->_memory->load();
+		$this->_cpu->jump();
+		$this->_cpu->execute();
 	}
 }
 ?>
