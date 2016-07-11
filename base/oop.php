@@ -284,6 +284,25 @@ class ChildClass extends BaseClass implements IA, IB{
 $childObj = new ChildClass();
 ?>
 
+<?php echo $headerBegin, 'Финальные классы и методы', $headerEnd;
+// ---- Финальный метод
+//
+class FinalMethodParent{
+	public final function finalMethod(){}
+}
+
+class FinalMethodChild extends FinalMethodParent{
+	//public function finalMethod(){} // --- произойдёт ошибка при попытке перегрузить final метод
+}
+
+// --- Финальный класс
+// 
+final class FinalParentClass{}
+
+//class TestFinalClass extends FinalParentClass{} // --- произойдёт ошибка при попытке 
+// ----------------------------------------------------- унаследоваться от финального класса
+?>
+
 
 
 
