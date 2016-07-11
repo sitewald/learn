@@ -207,6 +207,25 @@ class ConstTest{
 $testConstOfClass = ConstTest::MYCONST; // ------ обращение извне класса
 ?>
 
+<?php echo $headerBegin, 'Наследование', $headerEnd;
+
+// В функции __autoload в самом верху файла произойдёт попытка подключить класс ParentClass
+//
+class Child extends ParentClass{
+	public function __construct($info){
+		parent::__construct($info); // ------ Вызов родительского конструктора
+	}
+
+	public function getInfo(){
+		return parent::getInfo(); // --------- Вызов родительской реализации метода
+	}
+}
+
+$child = new Child("some info");
+
+echo $child->getInfo(), '<br />';
+?>
+
 <?php  echo $headerBegin, "Абстрактные классы", $headerEnd;
 
 class InfoObject{
@@ -235,46 +254,47 @@ class TestAbstractChild extends AbstractParent{
 TestAbstractChild::factory()->getInfo(new InfoObject());
 ?>
 
+<?php echo $headerBegin, 'Интерфейсы', $headerEnd;
 
+interface ISome{
+	function doSomething(); // --- все методы интерфейса public abstract
+}
 
-
-
-
-
-
-<?php echo $headerBegin, 'Наследование', $headerEnd;
-
-// В функции __autoload в самом верху файла произойдёт попытка подключить класс ParentClass
-//
-class Child extends ParentClass{
-	public function __construct($info){
-		parent::__construct($info); // ------ Вызов родительского конструктора
-	}
-
-	public function getInfo(){
-		return parent::getInfo(); // --------- Вызов родительской реализации метода
+class TestInterfaceClass implements ISome{
+	public function doSomething(){
+		echo 'do something <br />';
 	}
 }
 
-$child = new Child("some info");
-
-echo $child->getInfo(), '<br />';
-
+$ti = new TestInterfaceClass();
+$ti->doSomething();
 ?>
 
-<?php echo $headerBegin, 'Интерфейс', $headerEnd;
+<?php echo $headerBegin, 'PHP не поддерживает множественное наследование', $headerEnd;
+interface IA {}
+interface IB {}
+class BaseClass {}
 
-class TestInterface implements ISome{
-	public function showVar($var){
-		echo "<h1>$var</h1>";
+class ChildClass extends BaseClass implements IA, IB{
+	public function __construct(){
+		echo '<h3>Но поддерживает реализацию многих интерфейсов</h3>';
 	}
 }
 
-$ti = new TestInterface();
-
-$ti->showVar('implemented interface method work');
-
+$childObj = new ChildClass();
 ?>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
