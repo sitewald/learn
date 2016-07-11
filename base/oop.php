@@ -207,6 +207,28 @@ class ConstTest{
 $testConstOfClass = ConstTest::MYCONST; // ------ обращение извне класса
 ?>
 
+<?php echo $headerBegin, 'Статические свойства, методы - в PHP НЕТ СТАТИЧЕСКИХ КЛАССОВ', $headerEnd;
+class StaticFieldClass{
+	public static $objectsCount;
+
+	public function __construct(){
+		self::$objectsCount++; // --- обращение внутри класса
+	}
+
+	public static function getCountOfObjects(){
+		return self::$objectsCount;
+	}
+}
+
+$staticFieldObj1 = new StaticFieldClass();
+$staticFieldObj2 = new StaticFieldClass();
+
+// --- обращение извне класса
+//
+echo '<h3>Используется свойство - Всего создано ' . StaticFieldClass::$objectsCount . ' объектов</h3>';
+echo '<h3>Используется метод - Всего создано ' . StaticFieldClass::getCountOfObjects() . ' объектов</h3>';
+?>
+
 <?php echo $headerBegin, 'Наследование', $headerEnd;
 
 // В функции __autoload в самом верху файла произойдёт попытка подключить класс ParentClass
