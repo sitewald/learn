@@ -207,6 +207,41 @@ class ConstTest{
 $testConstOfClass = ConstTest::MYCONST; // ------ обращение извне класса
 ?>
 
+<?php  echo $headerBegin, "Абстрактные классы", $headerEnd;
+
+class InfoObject{
+	public $a = 1;
+	public $b = 2;
+}
+
+abstract class AbstractParent{
+	public abstract static function factory(); // ----- абстрактный статический метод
+
+	public abstract function getInfo(InfoObject $obj); // -- абстрактный метод
+}
+
+class TestAbstractChild extends AbstractParent{
+	public static function factory(){ // --- реализация абстрактного статического метода
+		return new TestAbstractChild();
+	}
+
+	public function getInfo(InfoObject $obj){ // --- реализация абстрактного метода
+		foreach($obj as $fieldName => $fieldValue){
+			echo "<h2>{$fieldName} => {$fieldValue}</h2>";
+		}
+	}
+}
+
+TestAbstractChild::factory()->getInfo(new InfoObject());
+?>
+
+
+
+
+
+
+
+
 <?php echo $headerBegin, 'Наследование', $headerEnd;
 
 // В функции __autoload в самом верху файла произойдёт попытка подключить класс ParentClass
