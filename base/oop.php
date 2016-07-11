@@ -278,6 +278,8 @@ class TestAbstractChild extends AbstractParent{
 	}
 }
 
+// -- Здесь также можно наблюдать разыменовывание объекта, при котором
+// метод вызывается у безымянного объекта, возвращаемого неким методом (фабричным)
 TestAbstractChild::factory()->getInfo(new InfoObject());
 ?>
 
@@ -382,21 +384,31 @@ class MagicHelper{
 // __call($имя_метода, $массив_параметров) - вызывается при обращении к несуществующему методу
 // __callStatic($имя_метода, $массив_параметров) - для несуществующего статического метода
 //
-// __get()
-// __set()
+// BEHAVIOR -------/ - будет создано новое свойство, значение которого можно будет получить
+// __get($имя_свойства) -- вызывается при попытке получить значение несуществующего свойства
+// __set($имя_свойства, $значение) -- вызывается при присвоении значения несуществующему свойству
 //
-// __isset()
-// __unset()
-// __sleep() 
-// __wakeup()
-// __toString()
+// BEHAVIOR -------/ 
+// __isset($имя_свойства) -- вызывается при проверке существования несуществующего свойства
+// __unset($имя_свойства) -- вызывается при попытке удалить несуществующего свойство
+//
+// __sleep() // --- вызывается перед сереализацией
+// __wakeup() // --- вызывается после десереализации
+//
+// ERROR ---------/
+// __toString() // -- при попытке привести объект к строке
+//
 // __invoke()
 // __set_state()
 // __clone() ------- вызывается при клонировании объекта с помощью clone - см. выше
 // __debugInfo() 
 
 class MagicMethods{
+	public $dynamicProperties = array(); // --- для __get и __set
+
 	public function __call($name, $parameters){
+		echo '<p>__call works</p>';
+
 		if($name != "showVar"){
 			echo '<h3>undefined method call!</h3>';
 			return;
@@ -406,8 +418,48 @@ class MagicMethods{
 	}
 
 	public static function __callStatic($name, $parameters){
+		echo '<p>__callStatic works</p>';
+
 		echo "<h3>Вызов несуществующего статического метода $name с параметрами:</h3>";
 		MagicHelper::showParameters($parameters);
+	}
+
+	public function __set($name, $value){
+		echo '<p>__set works</p>';
+
+		$this->dynamicProperties[$name] = $value;
+	}
+
+	public function __get($name){
+		echo '<p>__get works</p>';
+
+		return $this->dynamicProperties[$name];
+	}
+
+	public function __isset($name){
+		echo '<p>__isset works</p>';
+
+		return isset($this->dynamicProperties[$name]);
+	}
+
+	public function __unset($name){
+		echo '<p>__unset works</p>';
+
+		unset($this->dynamicProperties[$name]);
+	}
+
+	public function __toString(){
+		$info = '<p>__toString works</p>';
+
+		$info .= '<ul>';
+
+		foreach($this->dynamicProperties as $name => $value){
+			$info .= "<li>$name = $value</li>";
+		}
+
+		$info .= '</ul>';
+
+		return $info;
 	}
 }
 
@@ -432,7 +484,24 @@ echo '<hr />';
 // -- Присвоение и получение значения несуществующего свойства (__set, __get)
 //
 $magicMethods->name = 'Vasya';
-echo '<p>', $magicMethods->name, '</p>';
+$magicMethods->age = 24;
+
+echo 'Моё имя - ' . $magicMethods->name . ', мне ' . $magicMethods->age . ' лет';
+echo '<hr />';
+// ----------------------------------------
+
+// -- Проверка существования и удаление несуществующего свойства (__isset, __unset)
+//
+isset($magicMethods->surname);
+unset($magicMethods->surname);
+echo '<hr />';
+// -----------------------------------------
+
+// -- __toString
+// 
+echo '<p>' . $magicMethods . '</p>';
+echo '<hr />';
+// ----------------------------------------
 ?>
 
 
