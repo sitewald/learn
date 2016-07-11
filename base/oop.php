@@ -217,7 +217,7 @@ class InfoObject{
 abstract class AbstractParent{
 	public abstract static function factory(); // ----- абстрактный статический метод
 
-	public abstract function getInfo(InfoObject $obj); // -- абстрактный метод
+	public abstract function getInfo(InfoObject $obj); // -- абстрактный метод с типизированным параметром
 }
 
 class TestAbstractChild extends AbstractParent{
