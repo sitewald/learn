@@ -325,6 +325,24 @@ final class FinalParentClass{}
 // ----------------------------------------------------- унаследоваться от финального класса
 ?>
 
+<?php echo $headerBegin, 'Проверка типа - instanceOf', $headerEnd;
+
+interface ICar{}
+
+class Car implements ICar{}
+
+class Moskvich extends Car{}
+
+$moskvich_102_bl_82 = new Moskvich();
+
+echo '<ul>';
+
+if($moskvich_102_bl_82 instanceOf ICar) echo '<li>it is ICar</li>';
+if($moskvich_102_bl_82 instanceOf Car) echo '<li>it is Car</li>';
+if($moskvich_102_bl_82 instanceOf Moskvich) echo '<li>it is Moskvich</li>';
+
+echo '</ul>';
+?>
 
 
 
