@@ -15,6 +15,11 @@ function __autoload($className){
 	.header{
 		color: #1b3687; font-size: 20px; font-weight: bold;
 	}
+
+	.sub-header{
+		padding: 10px;
+		border: 1px solid #DBBB49;
+	}
 </style>
 
 <?php
@@ -238,7 +243,7 @@ class Child extends ParentClass{
 		parent::__construct($info); // ------ Вызов родительского конструктора
 	}
 
-	public function getInfo(){
+	public function getInfo(){ // ------------ Переопределение родительского метода
 		return parent::getInfo(); // --------- Вызов родительской реализации метода
 	}
 }
@@ -314,7 +319,7 @@ class FinalMethodParent{
 }
 
 class FinalMethodChild extends FinalMethodParent{
-	//public function finalMethod(){} // --- произойдёт ошибка при попытке перегрузить final метод
+	//public function finalMethod(){} // --- произойдёт ошибка при попытке переопределить final метод
 }
 
 // --- Финальный класс
@@ -342,6 +347,65 @@ if($moskvich_102_bl_82 instanceOf Car) echo '<li>it is Car</li>';
 if($moskvich_102_bl_82 instanceOf Moskvich) echo '<li>it is Moskvich</li>';
 
 echo '</ul>';
+?>
+
+<?php echo $headerBegin, 'Магические методы класса', $headerEnd;
+// --- Вспомогательный класс для демонстрации
+//
+class MagicHelper{
+	public static function showParameters($parameters){
+		echo '<h3>';
+		print_r($parameters);
+		echo '</h3>';
+	}
+}
+
+// Далее в кратком описании методов ->
+// ~par - произвольные параметры
+// пустые скобки - без параметров
+// $имя_метода - параметр с уточнением его назначения
+//
+//
+// __construct(~par) - вызывается при создании объекта с помощью new - см. выше
+// __destruct() ------ вызывается при удалении объекта - см. выше
+//
+// __call($имя_метода, $массив_параметров) - вызывается при обращении к несуществующему методу
+// __callStatic()
+//
+// __get()
+// __set()
+// __isset()
+// __unset()
+// __sleep() 
+// __wakeup()
+// __toString()
+// __invoke()
+// __set_state()
+// __clone() ------- вызывается при клонировании объекта с помощью clone - см. выше
+// __debugInfo() 
+
+class MagicMethods{
+	public function __call($name, $parameters){
+		if($name != "showVar"){
+			echo '<h3>undefined method call!</h3>';
+			return;
+		} 
+
+		MagicHelper::showParameters($parameters);
+	}
+}
+
+$magicMethods = new MagicMethods();
+
+// --------------------------------------
+echo 'Реализация перегрузки методов с помощью __call(...) (перегрузка методов не предусмотрена в PHP)';
+// -- Вызов любого существующего метода будет невозможен таким способом
+//
+$magicMethods->showVar(10);
+$magicMethods->showVar('bla-bla', true);
+$magicMethods->showVar(array('a' => 'A', 'b' => 'B'));
+echo '<hr />';
+// ---------------------------------------
 ?>
 
 
