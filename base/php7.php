@@ -1,5 +1,5 @@
 <?php
-// -- Файл-конспект по PHP7
+// **************  Файл-конспект по PHP7  ******************
 
 // -- Такая типизация была и в прежних версиях php
 // function forArray(array $arr){}
@@ -17,6 +17,7 @@ callAnonymous(function(){
 });
 
 // -- Типизированный аргумент - использование примитивных типов данных
+// ---------------------------------------------------
 
 function typedFunc($a, $b, int $c){
 	echo $c, '<br />';
@@ -29,7 +30,8 @@ typedFunc(true, "str", "10str"); // -- 10str будет приведено к 10
 // typedFunc(true, "str", "str"); // -- fatal error - третий параметр ни в каком виде не соответствует
 								  // -- типу int (must be of the type integer, string given)
 
-// -- Передать любое кол-во аргументов в функцию
+// -- Передача любого кол-ва аргументов в функцию
+// ---------------------------------------------------
 
 function parse(...$params){
 	print_r($params);
@@ -46,6 +48,7 @@ function typedParse(int ...$params){
 parse(10, true, '10str'); // -- Notice: A non well formed numeric value - для третьего параметра
 
 // -- Установка возвращаемого типа
+// ---------------------------------------------------
 
 function returnValue($var): int{
 	return $var;
@@ -62,6 +65,90 @@ echo '<h3>', returnValue(10), '</h3>';
 // -- такое преобразование ему выполнить не удастся - будет fatal error,
 // -- а если преобразование хоть как-то возможно (true к 1, '10str' к 10 и т.д.)
 // -- то выполнение продолжится (могут быть notice о неполном соответствии)
+
+// -- Null coalescing operator 
+// ---------------------------------------------------
+// оператор подстановки значения вместо null
+//  Замена громоздких конструкций типа
+
+// if($a === null){
+// 	$c = $b;
+// }else{
+// 	$c = $a;
+// }
+
+// --- или тернарного оператора $c = $a === null ? $b : $a;
+
+$a = null;
+$b = 0;
+
+$c = $a ?? $b ?? 10; // -- если $a === null, то подставится $b и так далее
+
+echo '<h3>', $c, '</h3>'; // -- выведет 0
+
+// --- Spaceship operator 
+// ---------------------------------------------------
+// может использоваться для функции usort, 
+// где пользователь задаёт свою функцию для сортировки массива,
+// и эта функция должна возвратить 1 или 0 или -1
+// Если первый элемент больше втрого - возвращает 1, если равны - 0, если меньше - -1
+
+echo 1 <=> 1; // -- 0
+echo 1 <=> 2; // -- -1
+echo 2 <=> 1; // -- 1
+
+echo 'a' <=> 'b'; // -- -1  сравнит коды символов 
+
+// -- Константы - массивы
+// ---------------------------------------------------
+
+const SIMPLE_CONST = '<h4> Constant-array </h4>';
+
+const FIRST_ARRAY = array(10, 20, 30);
+// -- или так
+define('SECOND_ARRAY', array(40, 50));
+
+echo SIMPLE_CONST;
+print_r(FIRST_ARRAY);
+print_r(SECOND_ARRAY);
+
+
+// -- Анонимные классы
+// ---------------------------------------------------
+
+$obj = new class{
+	public function sayHello(){ return "hello from anonymous class"; }
+	public static function staticSayHello($val){ echo '<h4>', $val, '</h4>'; }
+}; // -- НУЖНО ОБЯЗАТЕЛЬНО СТАВИТЬ ТОЧКУ С ЗАПЯТОЙ
+
+// --- вызов статического метода и метода объекта
+$obj::staticSayHello(
+		$obj->sayHello()
+); 
+
+// -- использование конструктора в анонимном классе
+$constr = new class("hello from constructor of anonymous class"){
+	public function __construct($val){
+		echo '<h4>', $val, '</h4>';
+	}
+};
+
+// --- наследование и реализация интерфейса в анонимном классе 
+class BaseForAnonymous{
+	public function sayHello() { echo 'hello from base class'; }
+}
+
+interface IDecorateParentOutput{
+	public function decorate();
+}
+
+$child = new class() extends BaseForAnonymous implements IDecorateParentOutput{
+	public function decorate(){
+		echo '<h4>', $this->sayHello(), '</h4>';
+	}
+};
+
+$child->decorate();
 
 
 
