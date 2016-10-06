@@ -280,8 +280,8 @@ function gen(){
 
 $generator = gen();
 
-// -- Метод current этого объекта выполняет код до первого yield и возвращает то, что
-// -- стоит напротив yield, метод next выполняет код следующей секции, 
+// -- Метод current этого объекта выполняет код до первого yield и(или) возвращает то, что
+// -- стоит напротив текущего yield, метод next выполняет код следующей секции, 
 // -- метод send передаёт нужное значение в yield, на котором произошла остановка
 // -- и выполняет код следующей секции
 
@@ -295,5 +295,29 @@ echo $yieldValue; // ---- second stop
 
 $generator->next(); // -- third code
 $generator->send('10'); // -- yield = 10
+
+// --- возвращаемое значение и вложенность генераторов
+function gen1(){
+	yield from [10, 20, 30];
+	yield 2;
+	yield 3;
+	yield from gen2(); // -- вложенность генераторов
+	return 'value from return';
+}
+
+function gen2(){
+	yield 'from gen2 1';
+	yield 'from gen2 2';
+}
+
+$generator = gen1();
+
+// echo '<br />',  $generator->getReturn(); // -- fatal error - вызывать только после всех yield
+
+foreach($generator as $val){
+	echo "<br />", $val;
+}
+
+echo '<br />',  $generator->getReturn(); // -- value from return
 
 
